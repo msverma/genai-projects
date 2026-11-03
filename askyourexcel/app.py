@@ -11,7 +11,7 @@ st.title("📊 Chat with your Excel")
 
 uploaded = st.file_uploader("Upload an Excel file", type=["xlsx", "xls"])
 if not uploaded:
-    st.info("Upload a file to start. Try sample_sales.xlsx.")
+    st.info("Upload a file to start. Try sample_store.xlsx.")
     st.stop()
 
 # Load once per file (st.cache_data avoids re-reading on every click)
