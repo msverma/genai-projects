@@ -14,7 +14,19 @@ from dotenv import load_dotenv
 
 load_dotenv()
 MODEL = "gemini-3.5-flash"
-
+def get_api_key():
+    """Read the key from .env (local) or Streamlit secrets (cloud)."""
+    key = os.getenv("GEMINI_API_KEY")
+    if not key:
+        try:
+            import streamlit as st
+            key = st.secrets["GEMINI_API_KEY"]
+        except Exception:
+            pass
+    if not key:
+        raise ValueError("GEMINI_API_KEY not found. Add it to .env (local) "
+                         "or to Streamlit Cloud → Settings → Secrets.")
+    return key
 
 # ---------------------------------------------------------------------------
 # 1. The "instruction format" the LLM must return (validated with pydantic)
