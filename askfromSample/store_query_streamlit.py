@@ -1,13 +1,7 @@
 """
-streamlit_app.py - Streamlit (web) version of store_query.py.
+it simply reads an Excel file, builds summary tables, and lets you ask questions in natural language.
 
-How it works:
-  1. Pandas builds many summary tables in advance (region wise, segment wise, pivots...)
-  2. Gemini reads your question and picks the right table (or a custom grouping)
-  3. Pandas returns the real table, so the numbers are always exact
 
-Run locally:  streamlit run streamlit_app.py
-Deploy:       Streamlit Cloud, main file = <folder>/streamlit_app.py, add GEMINI_API_KEY in Secrets
 """
 import os
 import json
@@ -19,7 +13,7 @@ from google import genai
 from google.genai import types
 
 # ===========================================================================
-# SETTINGS: change these to match your file and column names
+# configureation:   change column names to match your file and column names
 # ===========================================================================
 FILE_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Sample.xlsx")  # CHANGE 2
 SHEET_NAME = 0                      # 0 = first sheet, or write the sheet name
@@ -104,7 +98,7 @@ def pivot(data, rows, cols, value=SALES):
 
 
 # ===========================================================================
-# 3. Build all summary tables (name -> description + DataFrame)
+# 3. Building all summary tables (name -> description + DataFrame)
 # ===========================================================================
 def build_tables(df):
     T = {}
@@ -174,7 +168,7 @@ def build_tables(df):
 
 
 # ===========================================================================
-# 4. Data profile: what Gemini needs to know (never the full data)
+# 4. Data profile: what Gemini LLM needs to know
 # ===========================================================================
 def data_profile(df):
     lines = [f"Rows: {len(df)}",
@@ -394,7 +388,7 @@ def show_result(item):
 def main():
     st.set_page_config(page_title="Store Insights", page_icon="🛒", layout="wide")
     st.title("🛒 Store Insights")
-    st.caption("Ask anything about the store data. Gemini picks the table, pandas calculates the numbers.")
+    st.caption("Ask anything about the Sample store data. pandas calculates the numbers and Gemini provides the insights. only 10 questions per 7hour are allowed, so please be patient if you hit the limit.")
 
     with st.sidebar:
         uploaded = st.file_uploader("Use your own Excel (optional)", type=["xlsx", "xls"])
