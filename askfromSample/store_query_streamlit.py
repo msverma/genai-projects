@@ -391,7 +391,7 @@ def main():
     st.caption("Ask anything about the Sample store data. pandas calculates the numbers and Gemini provides the insights. only 10 questions per 7hour are allowed, so please be patient if you hit the limit.")
 
     with st.sidebar:
-        uploaded = st.file_uploader("Use your own Excel (optional)", type=["xlsx", "xls"])
+        uploaded = st.file_uploader("Upload Sample Store Dataset (optional)", type=["xlsx", "xls"])
         st.caption("Columns must match the names set at the top of the code.")
         if st.button("🗑️ Clear chat"):
             st.session_state.history, st.session_state.last_spec = [], None
